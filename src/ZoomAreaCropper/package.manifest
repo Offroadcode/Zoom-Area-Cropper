@@ -1,0 +1,8 @@
+{
+    javascript: [
+        "~/app_plugins/ZoomAreaCropper/js/ZoomAreaCropper.js"
+    ],
+    css: [
+        "~/app_plugins/ZoomAreaCropper/css/ZoomAreaCropper.css"
+    ]
+}

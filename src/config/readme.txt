@@ -1,0 +1,1 @@
+Learn more at http://github.com/offroadcode/zoom-area-cropper.
