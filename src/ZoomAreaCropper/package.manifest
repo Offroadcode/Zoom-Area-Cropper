@@ -1,4 +1,17 @@
 {
+    propertyEditors: [{
+        name: "Zoom Area Cropper",
+        alias: "ZoomAreaCropper.Editor",
+        icon: "icon-billboard",
+        group: "media",
+        editor: {
+            view: "~/app_plugins/ZoomAreaCropper/views/ZoomAreaCropperView.html",
+            valueType: "JSON"
+        },
+        prevalues: {
+            
+        }
+    }],
     javascript: [
         "~/app_plugins/ZoomAreaCropper/js/ZoomAreaCropper.js"
     ],

@@ -45,7 +45,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: [
-                    "ZoomAreaCropper/js/zoomAreaCropper.controller.js"
+                    "ZoomAreaCropper/js/zoomAreaCropperController.js"
                 ],
                 dest: "<%= basePath %>/js/ZoomAreaCropper.js"
             }
