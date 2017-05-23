@@ -15,6 +15,19 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
     * @description Sets up the initial variables for the view.
     */
     $scope.setVariables = function() {
+        $scope.isMouseDown = false;
+        $scope.isMouseOverFocus = false;
+        $scope.focusElem = false;
+        $scope.focusPos = {
+            x: 290,
+            y: 190
+        };
+        $scope.mousePos = {
+            x: 0,
+            y: 0
+        };
+        $scope.showHandle = false;
+        window.addEventListener('mouseup', $scope.mouseUp);
         console.info('$scope.model: ', $scope.model);
         console.info('$scope.model.value: ', $scope.model.value);
         $scope.model.value = $scope.getPropertyValue();
@@ -50,9 +63,47 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
                 $scope.model.value.media = media;
             }
         }
-		console.info("media: ", media);
-        console.info("$scope.model: ", $scope.model);
     };
+
+    $scope.mouseDown = function(e) {
+        $scope.mousePos = {
+            x: e.clientX,
+            y: e.clientY
+        };
+        window.addEventListener('mousemove', $scope.mouseMove);
+        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+            $scope.$apply();
+        }
+
+    };
+
+    $scope.mouseMove = function(e) {
+        e.preventDefault();
+        var diff = {
+            x: e.clientX - $scope.mousePos.x,
+            y: e.clientY - $scope.mousePos.y
+        }
+        $scope.mousePos = {
+            x: e.clientX,
+            y: e.clientY
+        }
+        $scope.focusPos = {
+            x: $scope.focusPos.x + diff.x,
+            y: $scope.focusPos.y + diff.y
+        };
+        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+            $scope.$apply();
+        }
+
+    };
+
+    $scope.mouseUp  = function(e) {
+        $scope.isMouseDown = false;
+        window.removeEventListener('mousemove', $scope.mouseMove);
+        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+            $scope.$apply();
+        }
+    }
 
     /**
     * @method openMediaPicker
@@ -79,6 +130,14 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
     }
 
 	// Helper Methods ////////////////////////////////////////////////////////////
+
+    $scope.focusPosStyle = function() {
+        var style = {
+            "top": $scope.focusPos.y + "px",
+            "left": $scope.focusPos.x + "px"
+        }
+        return style;
+    };
 
     /**
     * @method getPropertyValue

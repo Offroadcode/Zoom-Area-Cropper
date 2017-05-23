@@ -8,10 +8,28 @@
         </a>
     </div>
     <div class="image" ng-show="hasImageSelected()">
-        <div class="gravity-container">
-            <div class="viewport">
-                <img ng-src="{{model.value.media.url}}" />
+        <div class="imagecropper">
+            <div class="umb-cropper-imageholder clearfix">
+                <div class="umb-cropper-gravity">
+                    <div class="gravity-container">
+                        <div class="viewport">
+                            <img ng-src="{{model.value.media.url}}" />
+                            <div class="overlay ui-draggable ui-draggable-handle"
+                                ng-show="showHandle"
+                                ng-mousedown="mouseDown($event)"
+                                ng-style="focusPosStyle()"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <ul class="umb-sortable-thumbnails cropList clearfix">
+                <li>
+                    <a style="width: 75px; display: block; position: relative; text-align: center;">
+                        <i class="icon icon-add"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
         <a href="" class="btn btn-link btn-crop-delete" ng-click="removeImage()">
             <i class="icon-delete red"></i> 
