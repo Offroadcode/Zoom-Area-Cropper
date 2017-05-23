@@ -9,7 +9,20 @@
             valueType: "JSON"
         },
         prevalues: {
-            
+            fields: [
+                {
+                    label: "Width",
+                    description: "The width of a crop zoom",
+                    key: "width",
+                    view: "number"
+                },
+                {
+                    label: "Height",
+                    description: "The height of a crop zoom",
+                    key: "height",
+                    view: "number"
+                }
+            ]
         }
     }],
     javascript: [

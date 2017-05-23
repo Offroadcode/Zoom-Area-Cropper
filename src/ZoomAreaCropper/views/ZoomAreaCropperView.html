@@ -1,3 +1,22 @@
 <div ng-controller="zoom.area.cropper.controller" class="zoom-area-cropper">
-    Zoom Area Cropper
+    <div ng-show="!hasImageSelected()">
+        <a href="" ng-click="openMediaPicker()">
+            <span class="fileinput-button umb-upload-button-big" style="margin-bottom: 5px;">
+                <i class="icon icon-add"></i>
+                <p>Click to select image</p>
+            </span>
+        </a>
+    </div>
+    <div class="image" ng-show="hasImageSelected()">
+        <div class="gravity-container">
+            <div class="viewport">
+                <img ng-src="{{model.value.media.url}}" />
+            </div>
+        </div>
+        <a href="" class="btn btn-link btn-crop-delete" ng-click="removeImage()">
+            <i class="icon-delete red"></i> 
+            <localize key="content_uploadClear" class="ng-isolate-scope ng-scope">Remove file</localize>
+        </a>
+    </div>
+    
 </div>
