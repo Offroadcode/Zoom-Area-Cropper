@@ -15,6 +15,7 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
     * @description Sets up the initial variables for the view.
     */
     $scope.setVariables = function() {
+        $scope.timestamp = Date.now();
         $scope.isMouseDown = false;
         $scope.isMouseOverFocus = false;
         $scope.focusElem = false;
@@ -26,14 +27,42 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
             x: 0,
             y: 0
         };
+        $scope.dimensions = {
+            width: 0,
+            height: 0
+        }
+        $scope.selectedCrop = -1;
         $scope.showHandle = false;
         window.addEventListener('mouseup', $scope.mouseUp);
         console.info('$scope.model: ', $scope.model);
         console.info('$scope.model.value: ', $scope.model.value);
         $scope.model.value = $scope.getPropertyValue();
+        setTimeout(function() {
+            var img = document.getElementById('zac-' + $scope.timestamp);
+            $scope.dimensions = {
+                width: img.offsetWidth,
+                height: img.offsetHeight
+            }
+        }, 1000);
     };
 
 	// Event Handler Methods /////////////////////////////////////////////////////
+
+    $scope.addCrop = function() {
+        var newCrop = {
+            x: Math.floor($scope.model.value.media.width / 2) - Math.floor($scope.model.config.width / 2),
+            y: Math.floor($scope.model.value.media.height / 2) - Math.floor($scope.model.config.height / 2),
+            width: $scope.model.config.width,
+            height: $scope.model.config.height,
+            zoom: 1
+        };
+        if ($scope.model.value.crops) {
+            $scope.model.value.crops.push(newCrop);
+        } else {
+            $scope.model.value.crops = [newCrop];
+        }
+        $scope.switchCrop($scope.model.value.crops.length - 1);
+    };
 
     /**
     * @method $scope.handleMediaPickerSelection
@@ -91,6 +120,7 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
             x: $scope.focusPos.x + diff.x,
             y: $scope.focusPos.y + diff.y
         };
+        $scope.calcCropFromFocus($scope.focusPos);
         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
             $scope.$apply();
         }
@@ -131,6 +161,82 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
 
 	// Helper Methods ////////////////////////////////////////////////////////////
 
+    $scope.calcCropFromFocus = function(focus) {
+         var percent = {
+            x: focus.x / $scope.dimensions.width,
+            y: focus.y / $scope.dimensions.height
+        };
+
+        var center = {
+            x: Math.floor(percent.x * $scope.model.value.media.width),
+            y: Math.floor(percent.y * $scope.model.value.media.height)
+        };
+
+        var crop = $scope.model.value.crops[$scope.selectedCrop];
+
+        var newPos = {
+            x: center.x - Math.floor(crop.width / 2),
+            y: center.y - Math.floor(crop.height / 2)
+        };
+
+        if (newPos.x < 0) {
+            newPos.x = 0;
+        }
+        if (newPos.y < 0) {
+            newPos.y = 0;
+        }
+
+        crop.x = newPos.x;
+        crop.y = newPos.y;
+
+        $scope.model.value.crops[$scope.selectedCrop] = crop;
+    };
+
+    $scope.calcFocusFromCrop = function(crop) {
+        var center = {
+            x: crop.x + Math.floor(crop.width / 2),
+            y: crop.y + Math.floor(crop.height / 2)
+        };
+        var percent = {
+            x: center.x / $scope.model.value.media.width,
+            y: center.y / $scope.model.value.media.height
+        };
+        var newPos = {
+            x: Math.floor($scope.dimensions.width * percent.x),
+            y: Math.floor($scope.dimensions.height * percent.y)
+        };
+        $scope.focusPos = newPos;
+    };
+
+    $scope.cropSrc = function(index) {
+        var url =$scope.model.value.media.url;
+        var crop = $scope.model.value.crops[index];
+        if (!crop.zoom) { 
+            crop.zoom = 1;
+        }
+        url = url + "?crop=" + crop.x + "," + crop.y + "," + Math.ceil(crop.width / crop.zoom) + "," + Math.ceil(crop.height / crop.zoom);
+        url = url + "&width=" + crop.width + "&height=" + crop.height;
+        return url;
+    }
+
+    $scope.cropThumbStyle = function(index) {
+        var style = {};
+        if ($scope.selectedCrop == index) {
+            style = {
+                "border": "solid 2px rgba(0,0,0,0.3)"
+            };
+        }
+        return style;
+    };
+
+    $scope.currentZoom = function() {
+        var crop = $scope.model.value.crops[$scope.selectedCrop];
+        if (!crop.zoom) {
+            crop.zoom = 1;
+        }
+        return crop.zoom;
+    };
+
     $scope.focusPosStyle = function() {
         var style = {
             "top": $scope.focusPos.y + "px",
@@ -147,6 +253,7 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
     */
     $scope.getPropertyValue = function() {
         var value = {
+            crops: [],
             media: {
                 url: ""
             }
@@ -172,6 +279,13 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
             }
         }
         return hasImageSelected;
+    };
+
+    $scope.switchCrop = function(index) {
+        $scope.showHandle = true;
+        $scope.selectedCrop = index;
+        var crop = $scope.model.value.crops[index];
+        $scope.calcFocusFromCrop(crop);
     };
     
 	// Call $scope.init() ////////////////////////////////////////////////////////
