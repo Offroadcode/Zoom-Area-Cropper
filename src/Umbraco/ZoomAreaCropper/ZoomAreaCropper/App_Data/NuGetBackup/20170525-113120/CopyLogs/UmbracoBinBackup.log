@@ -1,0 +1,28 @@
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows                              
+-------------------------------------------------------------------------------
+
+  Started : Thursday, May 25, 2017 11:31:20 AM
+   Source : C:\Websites\Git\Zoom-Area-Cropper\src\Umbraco\ZoomAreaCropper\ZoomAreaCropper\bin\
+     Dest : C:\Websites\Git\Zoom-Area-Cropper\src\Umbraco\ZoomAreaCropper\ZoomAreaCropper\App_Data\NuGetBackup\20170525-113120\bin\
+
+    Files : *.*
+	    
+  Options : *.* /S /E /DCOPY:DA /COPY:DAT /R:1000000 /W:30 
+
+------------------------------------------------------------------------------
+
+	                   0	C:\Websites\Git\Zoom-Area-Cropper\src\Umbraco\ZoomAreaCropper\ZoomAreaCropper\bin\
+	  New Dir          0	C:\Websites\Git\Zoom-Area-Cropper\src\Umbraco\ZoomAreaCropper\ZoomAreaCropper\bin\Debug\
+	  New Dir          0	C:\Websites\Git\Zoom-Area-Cropper\src\Umbraco\ZoomAreaCropper\ZoomAreaCropper\bin\Release\
+
+------------------------------------------------------------------------------
+
+               Total    Copied   Skipped  Mismatch    FAILED    Extras
+    Dirs :         3         2         1         0         0         0
+   Files :         0         0         0         0         0         0
+   Bytes :         0         0         0         0         0         0
+   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
+   Ended : Thursday, May 25, 2017 11:31:20 AM
+
