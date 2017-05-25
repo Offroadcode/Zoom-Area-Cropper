@@ -1,4 +1,5 @@
 <div ng-controller="zoom.area.cropper.controller" class="zoom-area-cropper">
+    <!-- Image Selector -->
     <div ng-show="!hasImageSelected()">
         <a href="" ng-click="openMediaPicker()">
             <span class="fileinput-button umb-upload-button-big" style="margin-bottom: 5px;">
@@ -9,19 +10,28 @@
     </div>
     <div class="image" ng-show="hasImageSelected()">
         <div class="imagecropper">
-            <div class="umb-cropper-imageholder clearfix">
-                <div class="umb-cropper-gravity">
+            <!-- Image -->
+            <div class="umb-cropper-imageholder clearfix umb-cropper__container">
+                <div class="umb-cropper-gravity zac-gravity">
                     <div class="gravity-container">
-                        <div class="viewport">
-                            <img ng-src="{{model.value.media.url}}" id="zac-{{timestamp}}" />
+                        <div class="viewport zac-viewport">
+                            <img ng-show="viewMode == 'main'" 
+                                ng-src="{{model.value.media.url}}" 
+                                id="zac-{{timestamp}}" 
+                            />
+                            <img ng-show="viewMode == 'crop'" 
+                                class="zac-crop-preview"
+                                ng-src={{model.value.crops[selectedCrop].url}} 
+                            /> 
                             <div class="overlay ui-draggable ui-draggable-handle"
-                                ng-show="showHandle"
+                                ng-show="showHandle && viewMode=='main'"
                                 ng-mousedown="mouseDown($event)"
                                 ng-style="focusPosStyle()"></div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- List of Crops -->
             <ul class="umb-sortable-thumbnails cropList" style="display: block";>
                 <li>
                     <a style="width: 75px; display: block; position: relative; text-align: center;" ng-click="addCrop()">
@@ -29,19 +39,32 @@
                     </a>
                 </li>
                 <li ng-repeat="crop in model.value.crops track by $index" ng-style="cropThumbStyle($index)">
-                    <a href="" style="width: 100%; height: 100%; display: block;" ng-click="switchCrop($index)">
-                    <img ng-src="{{cropSrc($index)}}" style="max-width: 75px" />
+                    <a href="" style="width: 100%; min-height: 10px; height: 100%; display: block;" ng-click="switchCrop($index)">
+                        <img ng-src="{{crop.url}}" style="max-width: 75px" />
+                        <div class="crop-information">
+                            <span class="crop-name crop-text">{{crop.name ? crop.name : ""}}</span>
+                        </div>
                     </a>
                 </li>
             </ul>
         </div>
-        <div ng-show="selectedCrop > -1">
-            <div class="crop-slider" style="text-align: center;">
+        <!-- Current Crop Details -->
+        <div class="zac-details" ng-show="selectedCrop > -1" style="max-width:600px">
+            <div>
+                <input class="crop-name" type="text" ng-model="model.value.crops[selectedCrop].name" />
+                <div class="zac-buttons-holder">
+                    <button ng-show="viewMode == 'main'"  type="button" class="btn umb-button__button btn-info" ng-click="changeMode('crop')">Preview Crop</button>
+                    <button ng-show="viewMode == 'crop'"  type="button" class="btn umb-button__button btn-info" ng-click="changeMode('main')">Show Main Image</button>
+                    <button type="button" class="btn umbraco-button__button btn-warning" ng-click="deleteSelectedCrop()">Delete Crop</button>
+                </div>
+            </div><br/>
+            <div class="crop-slider" style="text-align: center;" ng-show="viewMode == 'crop'">
                 <i class="icon-picture"></i>
-                <input type="range" min="0.1" max="4" step="0.001" ng-model="model.value.crops[selectedCrop].zoom" />
+                <input type="range" min="0.1" max="4" step="0.001" ng-model="model.value.crops[selectedCrop].zoom" ng-change="updateCropCoord()" />
                 <i class="icon-picture" style="font-size: 22px"></i>
             </div>
         </div>
+        <!-- Delete Image Link -->
         <a href="" class="btn btn-link btn-crop-delete" ng-click="removeImage()">
             <i class="icon-delete red"></i> 
             <localize key="content_uploadClear" class="ng-isolate-scope ng-scope">Remove file</localize>
