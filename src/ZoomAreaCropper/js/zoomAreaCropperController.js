@@ -35,7 +35,6 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         $scope.showHandle = false;
         $scope.viewMode = "main";
         window.addEventListener('mouseup', $scope.mouseUp);
-        console.info('$scope.model: ', $scope.model);
         $scope.model.value = $scope.getPropertyValue();
         setTimeout(function() {
             var img = document.getElementById('zac-' + $scope.timestamp);
@@ -80,10 +79,21 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         $scope.switchCrop(value.crops.length - 1);
     };
 
+    /**
+     * @method changeMode
+     * @param {string} mode - 'main' or 'crop'
+     * @returns {void}
+     * @description Changes the view mode between the crop or main views.
+     */
     $scope.changeMode = function(mode) {
         $scope.viewMode = mode;
     };
 
+    /**
+     * @method deleteSelectedCrop
+     * @returns {void}
+     * @description Deletes the currently selected crop.
+     */
     $scope.deleteSelectedCrop = function() {
         $scope.model.value.crops.splice($scope.selectedCrop, 1);
         $scope.selectedCrop = -1;
@@ -100,7 +110,6 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
     */
     $scope.handleMediaPickerSelection = function(data) {
         if (data) {
-			console.info("data from picker: ", data);
             if (data.id) {
                 var media = {
                     altText: data.name,
@@ -121,6 +130,13 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         }
     };
 
+    /**
+     * @method mouseDown
+     * @param {Event} e
+     * @returns {void}
+     * @description Event handler for when the mouse was clicked down on the 
+     * focus handle.
+     */
     $scope.mouseDown = function(e) {
         $scope.mousePos = {
             x: e.clientX,
@@ -133,6 +149,13 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
 
     };
 
+    /**
+     * @method mouseMove
+     * @param {Event} e
+     * @returns {void}
+     * @description Event handler for when the mouse is moved across the viewport, 
+     * to move the focus handle.
+     */
     $scope.mouseMove = function(e) {
         e.preventDefault();
         var diff = {
@@ -155,6 +178,13 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
 
     };
 
+    /**
+     * @method mouseUp
+     * @param {Event} e
+     * @returns {void}
+     * @description Event handler for when the moues is released to stop dragging 
+     * the focus handle.
+     */
     $scope.mouseUp  = function(e) {
         $scope.isMouseDown = false;
         window.removeEventListener('mousemove', $scope.mouseMove);
@@ -189,6 +219,12 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         $scope.showHandle = false;
     }
 
+    /**
+     * @method updateCropCoord
+     * @returns {void}
+     * @description Update the currently selected crop's coordinates based on 
+     * the focus handle, and then update the url.
+     */
     $scope.updateCropCoord = function() {
         $scope.calcCropFromFocus($scope.focusPos);
         $scope.updateCropUrl();
@@ -273,6 +309,12 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         $scope.focusPos = newPos;
     };
 
+    /**
+     * @method cropSrc
+     * @param {number} index
+     * @returns {string}
+     * @description Build the crop's url for the image src, and return it.
+     */
     $scope.cropSrc = function(index) {
         var url = $scope.model.value.media.url;
         var crop = JSON.parse(JSON.stringify($scope.model.value.crops[index]));
@@ -291,6 +333,12 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         return url;
     };
 
+    /**
+     * @method cropThumbStyle
+     * @param {number} index
+     * @returns {Object}
+     * @description Return style data for the indicated crop.
+     */
     $scope.cropThumbStyle = function(index) {
         var style = {};
         if ($scope.selectedCrop == index) {
@@ -301,6 +349,11 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         return style;
     };
 
+    /**
+     * @method currentZoom
+     * @returns {number}
+     * @description Return the current zoom rating on the currently selected crop.
+     */
     $scope.currentZoom = function() {
         var crop = $scope.model.value.crops[$scope.selectedCrop];
         if (!crop.zoom) {
@@ -309,6 +362,11 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         return crop.zoom;
     };
 
+    /**
+     * @method focusPosStyle
+     * @returns {Object}
+     * @description Return style data to position the focus handle.
+     */
     $scope.focusPosStyle = function() {
         var style = {
             "top": $scope.focusPos.y + "px",
@@ -353,21 +411,33 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         return hasImageSelected;
     };
 
+    /**
+     * @method switchCrop
+     * @param {number} index
+     * @returns {void}
+     * @description Switch the selected crop to the indicated index and perform
+     * needed operations to show its details.
+     */
     $scope.switchCrop = function(index) {
         $scope.showHandle = true;
         $scope.selectedCrop = index;
         var crop = $scope.model.value.crops[index];
         $scope.calcFocusFromCrop(crop);
         $scope.updateCropUrl();
-    };
+    }; 
 
+    /**
+     * @method updateCropUrl
+     * @returns {void}
+     * @description Update the currently selected crop's image url with the new 
+     * positioning data.
+     */
     $scope.updateCropUrl = function() {
         var crop = $scope.model.value.crops[$scope.selectedCrop];
         var url = $scope.cropSrc($scope.selectedCrop);
         crop.url = url;
         $scope.model.value.crops[$scope.selectedCrop] = crop;
-        console.info('url', url);
-    }
+    };
     
 	// Call $scope.init() ////////////////////////////////////////////////////////
 
