@@ -2,3 +2,6 @@ dist/
 node_modules/
 tmp/
 src/.sass-cache/
+src/Umbraco/ZoomAreaCropper/packages/
+src/Umbraco/ZoomAreaCropper/ZoomAreaCropper/bin/
+src/Umbraco/ZoomAreaCropper/ZoomAreaCropper/obj/debug/

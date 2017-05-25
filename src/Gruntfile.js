@@ -17,6 +17,10 @@ module.exports = function(grunt) {
                 spawn: false,
                 atBegin: true
             },
+            dll: {
+                files: ['Umbraco/ZoomAreaCropper/**/*.cs'] ,
+                tasks: ['msbuild:dist', 'copy:dll']
+            },            
             js: {
                 files: ["ZoomAreaCropper/**/*.js"],
                 tasks: ["concat:dist"]
@@ -52,6 +56,12 @@ module.exports = function(grunt) {
         },
 
         copy: {
+            dll: {
+                cwd: 'Umbraco/ZoomAreaCropper/bin/debug/',
+                src: 'ZoomAreaCropper.dll',
+                dest: '<%= dest %>/bin/',
+                expand: true
+            },            
             html: {
                 cwd: "ZoomAreaCropper/views/",
                 src: ["*.html"],
@@ -127,6 +137,26 @@ module.exports = function(grunt) {
             build: '<%= grunt.config("basePath").substring(0, 4) == "dist" ? "dist/**/*" : "null" %>',
             tmp: ["tmp"]
         },
+
+        msbuild: {
+            options: {
+                stdout: true,
+                verbosity: 'quiet',
+                maxCpuCount: 4,
+                version: 4.0,
+                buildParameters: {
+                WarningLevel: 2,
+                NoWarn: 1607
+                }
+            },
+            dist: {
+                src: ['Umbraco/ZoomAreaCropper/ZoomAreaCropper.csproj'],
+                options: {
+                    projectConfiguration: 'Debug',
+                    targets: ['Clean', 'Rebuild'],
+                }
+            }
+        },
     });
 
     grunt.registerTask("default", [
@@ -134,7 +164,9 @@ module.exports = function(grunt) {
         "sass:dist",
         "copy:html",
         "copy:manifest",
-        "copy:css"
+        "copy:css",
+        "msbuild:dist",
+        "copy:dll"
     ]);
 
     grunt.registerTask("umbraco", [
