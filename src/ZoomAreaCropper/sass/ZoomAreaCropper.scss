@@ -1,0 +1,33 @@
+.zac-gravity {
+  margin: 0 auto;
+  display: block;  
+}
+
+.zac-viewport { 
+    margin: 0 auto;
+    display: block;
+}
+
+.zac-crop-preview {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.zac-details {
+    border-bottom: solid 1px #f3f3f5;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    .crop-name {
+        border: none; 
+        border-bottom: solid 1px #AAA;        
+    }
+    .zac-buttons-holder {
+        display: inline-block;
+        float: right;
+    }
+    .crop-slider {
+        padding-top: 10px;
+        border-top: solid 1px #f3f3f5;
+    }
+}
