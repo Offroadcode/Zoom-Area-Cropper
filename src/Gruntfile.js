@@ -57,7 +57,7 @@ module.exports = function(grunt) {
 
         copy: {
             dll: {
-                cwd: 'Umbraco/ZoomAreaCropper/bin/debug/',
+                cwd: 'Umbraco/ZoomAreaCropper/ZoomAreaCropper/bin/debug/',
                 src: 'ZoomAreaCropper.dll',
                 dest: '<%= dest %>/bin/',
                 expand: true
@@ -150,7 +150,7 @@ module.exports = function(grunt) {
                 }
             },
             dist: {
-                src: ['Umbraco/ZoomAreaCropper/ZoomAreaCropper.csproj'],
+                src: ['Umbraco/ZoomAreaCropper/ZoomAreaCropper/ZoomAreaCropper.csproj'],
                 options: {
                     projectConfiguration: 'Debug',
                     targets: ['Clean', 'Rebuild'],

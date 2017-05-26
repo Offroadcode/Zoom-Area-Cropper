@@ -1,10 +1,9 @@
-﻿using ZoomAreaCropper.Models;
-using Umbraco.Core.Models.PublishedContent;
+﻿using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
 
 namespace ZoomAreaCropper.Converters
 {
-    class ZoomAreaCropperPropertyValueConverter : IPropertyValueConverter
+    public class ZoomAreaCropperPropertyValueConverter : IPropertyValueConverter
     {
         public bool IsConverter(PublishedPropertyType propertyType)
         {

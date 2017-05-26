@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
 namespace ZoomAreaCropper.Models
 {
-    class Crop
+    public class Crop
     {
         [JsonProperty("height")]
         public int Height { get; set; }
@@ -30,7 +25,15 @@ namespace ZoomAreaCropper.Models
         public int Y { get; set; }
 
         [JsonProperty("zoom")]
-        public decimal Zoom { get; set; } 
+        public decimal Zoom { get; set; }
+
+        /// <summary>
+        /// Confirms this crop is valid with a URL
+        /// </summary>
+        public bool IsValid
+        {
+            get { return !string.IsNullOrEmpty(Url); }
+        }
 
         public static Crop Deserialize(string json)
         {
