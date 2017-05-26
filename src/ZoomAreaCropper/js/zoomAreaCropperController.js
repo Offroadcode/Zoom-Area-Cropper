@@ -32,21 +32,14 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
             height: 0
         }
         $scope.selectedCrop = -1;
+        $scope.showCrops = false;
         $scope.showHandle = false;
         $scope.viewMode = "main";
         window.addEventListener('mouseup', $scope.mouseUp);
         $scope.model.value = $scope.getPropertyValue();
-        setTimeout(function() {
-            var img = document.getElementById('zac-' + $scope.timestamp);
-            $scope.dimensions = {
-                width: img.offsetWidth,
-                height: img.offsetHeight
-            }
-            $scope.focusPos = {
-                x: Math.ceil($scope.dimensions.width / 2),
-                y: Math.ceil($scope.dimensions.height / 2)
-            };
-        }, 1000);
+        if ($scope.model.value.media.url !== "") {
+            $scope.setImageDimensions();
+        }
     };
 
 	// Event Handler Methods /////////////////////////////////////////////////////
@@ -76,6 +69,7 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
             value.crops = [newCrop];
         }
         $scope.model.value = value;
+        console.info($scope.model.value);
         $scope.switchCrop(value.crops.length - 1);
     };
 
@@ -126,6 +120,7 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
 					}
 				});
                 $scope.model.value.media = media;
+                $scope.setImageDimensions();
             }
         }
     };
@@ -217,6 +212,7 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         };
         $scope.model.value.crops = [];
         $scope.showHandle = false;
+        $scope.showCrops = false;
     }
 
     /**
@@ -409,6 +405,28 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
             }
         }
         return hasImageSelected;
+    };
+
+    /**
+     * @method setImageDimensions
+     * @returns {void}
+     * @description Waits one second for image dimensions to be set and then uses 
+     * those to determine the focus position.
+     */
+    $scope.setImageDimensions = function() {
+        setTimeout(function() {
+            var img = document.getElementById('zac-' + $scope.timestamp);
+            $scope.dimensions = {
+                width: img.offsetWidth,
+                height: img.offsetHeight
+            }
+            $scope.focusPos = {
+                x: Math.ceil($scope.dimensions.width / 2),
+                y: Math.ceil($scope.dimensions.height / 2)
+            };
+            $scope.showCrops = true;
+            $scope.$apply();
+        }, 1000);
     };
 
     /**

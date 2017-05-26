@@ -32,13 +32,13 @@
                 </div>
             </div>
             <!-- List of Crops -->
-            <ul class="umb-sortable-thumbnails cropList" style="display: block";>
-                <li>
+            <ul class="umb-sortable-thumbnails cropList" style="display: block">
+                <li ng-show="showCrops">
                     <a style="width: 75px; display: block; position: relative; text-align: center;" ng-click="addCrop()">
                         <i class="icon icon-add"></i>
                     </a>
                 </li>
-                <li ng-repeat="crop in model.value.crops track by $index" ng-style="cropThumbStyle($index)">
+                <li ng-show="showCrops" ng-repeat="crop in model.value.crops track by $index" ng-style="cropThumbStyle($index)">
                     <a href="" style="width: 100%; min-height: 10px; height: 100%; display: block;" ng-click="switchCrop($index)">
                         <img ng-src="{{crop.url}}" style="max-width: 75px" />
                         <div class="crop-information">
@@ -46,6 +46,7 @@
                         </div>
                     </a>
                 </li>
+                <li ng-show="!showCrops">Loading...</li>
             </ul>
         </div>
         <!-- Current Crop Details -->
