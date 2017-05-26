@@ -14,6 +14,8 @@ Once installed, in the editor for a page with the cropper you can select an imag
 
 [Here's a simple example of making use of Zoom Area Cropper in your view](https://gist.github.com/naepalm/ef62771d72af15b9f337307eec01b4d1).
 
+**Note:** Super large images work with the cropper but can sometimes take several seconds in such cases for the preview crops to update as ImageProcessor works through the bigger images. More typical sized media are more speedy with the previews.
+
 ## Questions?
 
 If you have questions, feel free to ask them [here](https://github.com/Offroadcode/Zoom-Area-Cropper/issues).
