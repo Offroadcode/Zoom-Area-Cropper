@@ -1,5 +1,13 @@
 # Change Log
 
+## v1.0.1
+
+### Fixed
+
+* Fixed issue where failing to save and reload editor page after selecting image 
+would cause crop previews to show incorrectly due to incorrect image dimension 
+assumptions.
+
 ## v1.0.0
 
 ### Added
