@@ -4,11 +4,15 @@ A custom property editor for Umbraco that allows the editor to select multiple c
 
 ![example](https://github.com/Offroadcode/Zoom-Area-Cropper/blob/master/assets/zoomAreaCropper.gif)
 
-## Download for Umbraco
+## Installation & Use
 
 You can install the selected release through the Umbraco package installer or [download and install locally from Our](https://our.umbraco.org/projects/website-utilities/zoom-area-cropper/).
 
 After installing the package, create a new DataType and select "Zoom Area Cropper" from the property editor dropdown. Set the width and height you want your crops to output to in the DataType, and then add it to a DocType of your choice.
+
+Once installed, in the editor for a page with the cropper you can select an image, and then add one or more crop points for it. Each crop point has its focus determined by the focus handle, has a name you can change, and then has a zoom level that you can adjust independent of other crops after selecting "preview crop". (See gif above for example of what this looks like).
+
+[Here's a simple example of making use of Zoom Area Cropper in your view](https://gist.github.com/naepalm/ef62771d72af15b9f337307eec01b4d1).
 
 ## Questions?
 
