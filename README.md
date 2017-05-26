@@ -2,6 +2,8 @@
 
 A custom property editor for Umbraco that allows the editor to select multiple cropping areas with different zooms for an image.
 
+![example](https://github.com/Offroadcode/Zoom-Area-Cropper/blob/master/assets/zoomAreaCropper.gif)
+
 ## Download for Umbraco
 
 You can install the selected release through the Umbraco package installer or [download and install locally from Our](https://our.umbraco.org/projects/website-utilities/zoom-area-cropper/).
