@@ -49,6 +49,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: [
+                    "ZoomAreaCropper/js/imageOnLoadDirective.js",
                     "ZoomAreaCropper/js/zoomAreaCropperController.js"
                 ],
                 dest: "<%= basePath %>/js/ZoomAreaCropper.js"

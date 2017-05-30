@@ -16,8 +16,9 @@
                     <div class="gravity-container">
                         <div class="viewport zac-viewport">
                             <img ng-show="viewMode == 'main'" 
-                                ng-src="{{model.value.media.url}}" 
+                                ng-src="{{model.value.media.url + '?width=600'}}" 
                                 id="zac-{{timestamp}}" 
+                                zacimageonload="setImageDimensions()"
                             />
                             <img ng-show="viewMode == 'crop'" 
                                 class="zac-crop-preview"

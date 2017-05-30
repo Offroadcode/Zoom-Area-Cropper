@@ -37,9 +37,9 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         $scope.viewMode = "main";
         window.addEventListener('mouseup', $scope.mouseUp);
         $scope.model.value = $scope.getPropertyValue();
-        if ($scope.model.value.media.url !== "") {
+        /*if ($scope.model.value.media.url !== "") {
             $scope.setImageDimensions();
-        }
+        }*/
     };
 
 	// Event Handler Methods /////////////////////////////////////////////////////
@@ -69,7 +69,6 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
             value.crops = [newCrop];
         }
         $scope.model.value = value;
-        console.info($scope.model.value);
         $scope.switchCrop(value.crops.length - 1);
     };
 
@@ -120,7 +119,7 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
 					}
 				});
                 $scope.model.value.media = media;
-                $scope.setImageDimensions();
+                /*$scope.setImageDimensions();*/
             }
         }
     };
@@ -141,7 +140,6 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
             $scope.$apply();
         }
-
     };
 
     /**
@@ -414,19 +412,19 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
      * those to determine the focus position.
      */
     $scope.setImageDimensions = function() {
-        setTimeout(function() {
-            var img = document.getElementById('zac-' + $scope.timestamp);
-            $scope.dimensions = {
-                width: img.offsetWidth,
-                height: img.offsetHeight
-            }
-            $scope.focusPos = {
-                x: Math.ceil($scope.dimensions.width / 2),
-                y: Math.ceil($scope.dimensions.height / 2)
-            };
-            $scope.showCrops = true;
+        var img = document.getElementById('zac-' + $scope.timestamp);
+        $scope.dimensions = {
+            width: img.offsetWidth,
+            height: img.offsetHeight
+        }
+        $scope.focusPos = {
+            x: Math.ceil($scope.dimensions.width / 2),
+            y: Math.ceil($scope.dimensions.height / 2)
+        };
+        $scope.showCrops = true;
+        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
             $scope.$apply();
-        }, 1000);
+        }
     };
 
     /**
