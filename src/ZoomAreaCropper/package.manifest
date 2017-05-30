@@ -14,13 +14,23 @@
                     label: "Width",
                     description: "The width of a crop zoom",
                     key: "width",
-                    view: "number"
+                    view: "number",
+                    validation: [
+                        {
+                            type: "Required"
+                        }
+                    ]
                 },
                 {
                     label: "Height",
                     description: "The height of a crop zoom",
                     key: "height",
-                    view: "number"
+                    view: "number",
+                    validation: [
+                        {
+                            type: "Required"
+                        }
+                    ]
                 }
             ]
         }
