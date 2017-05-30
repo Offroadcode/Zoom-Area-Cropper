@@ -14,7 +14,7 @@ Once installed, in the editor for a page with the cropper you can select an imag
 
 [Here's a simple example of making use of Zoom Area Cropper in your view](https://gist.github.com/naepalm/ef62771d72af15b9f337307eec01b4d1).
 
-**Note:** Super large images work with the cropper but can sometimes take several seconds in such cases for the preview crops to update as ImageProcessor works through the bigger images. More typical sized media are more speedy with the previews.
+**Note:** When using super large images in the cropper, you may need to save your page after adjusting a crop's position or zoom level in order to see the changed image in the crop's preview, due to ImageProcessor taking longer to handle modifying such large images. More typical sized media are more speedy with the previews.
 
 ## Questions?
 
