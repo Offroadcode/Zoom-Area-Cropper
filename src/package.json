@@ -1,6 +1,6 @@
 {
   "name": "Zoom-Area-Cropper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "dependencies": {
     "grunt": "~0.4.2",
     "bower": "~1.2.8",

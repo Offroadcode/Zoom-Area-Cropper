@@ -1,5 +1,12 @@
 # Change Log
 
+## v1.0.2
+
+### Added
+
+* The height and width prevalues are now required, preventing a developer from 
+setting up an editor with no configured values for those fields.
+
 ## v1.0.1
 
 ### Fixed
