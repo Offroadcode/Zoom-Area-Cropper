@@ -1,4 +1,4 @@
-# Zoom-Area-Cropper &middot; ![version](https://img.shields.io/badge/version-1.0.2-green.svg) [![our umbraco](https://img.shields.io/badge/our-umbraco-orange.svg)](https://our.umbraco.org/projects/website-utilities/text-over-image-editor/)
+# Zoom-Area-Cropper &middot; ![version](https://img.shields.io/badge/version-1.0.3-green.svg) [![our umbraco](https://img.shields.io/badge/our-umbraco-orange.svg)](https://our.umbraco.org/projects/website-utilities/text-over-image-editor/)
 
 A custom property editor for Umbraco that allows the editor to select multiple cropping areas with different zooms for an image.
 

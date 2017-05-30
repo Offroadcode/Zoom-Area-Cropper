@@ -1,5 +1,16 @@
 # Change Log
 
+## v1.0.3
+
+### Fixed
+
+* Added directive to listen for end of loading of main image so that the proper 
+calculations for showing previews and positioning the focus handler can be properly
+done when dealing with slow load times (especially on larger images). Solves 
+issues [#2](https://github.com/Offroadcode/Zoom-Area-Cropper/issues/2) and [#3](https://github.com/Offroadcode/Zoom-Area-Cropper/issues/3).
+* Added '?width=600' to main image preview url so that larger images don't need 
+to be sent down to client only to be resized by browser.
+
 ## v1.0.2
 
 ### Added
