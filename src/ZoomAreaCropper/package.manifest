@@ -12,7 +12,7 @@
             fields: [
                 {
                     label: "Width",
-                    description: "The width of a crop zoom",
+                    description: "Required. The width of a crop zoom.",
                     key: "width",
                     view: "number",
                     validation: [
@@ -23,7 +23,7 @@
                 },
                 {
                     label: "Height",
-                    description: "The height of a crop zoom",
+                    description: "Required. The height of a crop zoom",
                     key: "height",
                     view: "number",
                     validation: [
