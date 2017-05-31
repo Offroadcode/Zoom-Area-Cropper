@@ -28,8 +28,8 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
             y: 0
         };
         $scope.dimensions = {
-            width: 0,
-            height: 0
+            width: 1,
+            height: 1
         }
         $scope.selectedCrop = -1;
         $scope.showCrops = false;
@@ -55,8 +55,8 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         var configHeight = Number($scope.model.config.height);
         var configWidth = Number($scope.model.config.width);
         var newCrop = {
-            x: Math.floor(value.media.width / 2) - Math.floor(configWidth / 2),
-            y: Math.floor(value.media.height / 2) - Math.floor(configHeight / 2),
+            x: Math.ceil(value.media.width / 2) - Math.ceil(configWidth / 2),
+            y: Math.ceil(value.media.height / 2) - Math.ceil(configHeight / 2),
             width: configWidth,
             height: configHeight,
             url: "",
@@ -119,7 +119,6 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
 					}
 				});
                 $scope.model.value.media = media;
-                /*$scope.setImageDimensions();*/
             }
         }
     };
@@ -237,8 +236,8 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
 
         // 1. Determine the focus point's relative position by percentage.
          var percent = {
-            x: focus.x / $scope.dimensions.width,
-            y: focus.y / $scope.dimensions.height
+            x: (focus.x + 10) / $scope.dimensions.width,
+            y: (focus.y + 10) / $scope.dimensions.height
         };
 
         // 2. Calculate its actual position on the full sized image. This is the 
@@ -261,13 +260,13 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         // 4. Subtract half of the crop souce width/height from the crop's 
         // center to get the crop's corner. This is the crop x/y.
         var cropCorner = {
-            x: center.x - Math.floor(sourceDimensions.width / 2),
-            y: center.y - Math.floor(sourceDimensions.height / 2)
+            x: center.x - Math.ceil(sourceDimensions.width / 2),
+            y: center.y - Math.ceil(sourceDimensions.height / 2)
         };
 
         crop.x = cropCorner.x;
         crop.y = cropCorner.y;
-
+ 
         $scope.model.value.crops[$scope.selectedCrop] = crop;
     };
 
@@ -286,8 +285,8 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         };
 
         var cropCenter = {
-            x: crop.x + Math.floor(sourceDimensions.width / 2),
-            y: crop.y + Math.floor(sourceDimensions.height / 2)
+            x: crop.x + Math.ceil(sourceDimensions.width / 2),
+            y: crop.y + Math.ceil(sourceDimensions.height / 2)
         };
 
         var percent = {
@@ -296,8 +295,8 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
         };
 
         var newPos = {
-            x: Math.floor($scope.dimensions.width * percent.x),
-            y: Math.floor($scope.dimensions.height * percent.y)
+            x: Math.floor($scope.dimensions.width * percent.x) - 10,
+            y: Math.floor($scope.dimensions.height * percent.y) - 10
         };
         
         $scope.focusPos = newPos;
@@ -316,10 +315,12 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
             crop.zoom = 1;
         }
         // We can't start a crop beyond it's topmost or leftmost section.
-        if (crop.x < 0) {
+        crop.x = Number(crop.x);
+        crop.y = Number(crop.y);
+        if (isNaN(crop.x) || crop.x < 0) {
             crop.x = 0;
         }
-        if (crop.y < 0) {
+        if (isNaN(crop.y) || crop.y < 0) {
             crop.y = 0;
         }
         url = url + "?crop=" + crop.x + "," + crop.y + "," + Math.ceil(crop.width / crop.zoom) + "," + Math.ceil(crop.height / crop.zoom);
@@ -413,17 +414,27 @@ angular.module("umbraco").controller("zoom.area.cropper.controller", function($s
      */
     $scope.setImageDimensions = function() {
         var img = document.getElementById('zac-' + $scope.timestamp);
-        $scope.dimensions = {
-            width: img.offsetWidth,
-            height: img.offsetHeight
-        }
-        $scope.focusPos = {
-            x: Math.ceil($scope.dimensions.width / 2),
-            y: Math.ceil($scope.dimensions.height / 2)
+        var dimensions = {
+            width: img.clientWidth,
+            height: img.clientHeight
         };
-        $scope.showCrops = true;
-        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
-            $scope.$apply();
+        if (dimensions.width == 0 || dimensions.height == 0) {
+            // Somehow we've failed to get image dimensions yet, let's wait and 
+            // try again.
+            window.setTimeout(function() {
+                $scope.setImageDimensions();
+            }, 100);
+        } else {
+            $scope.dimensions = dimensions;
+            $scope.focusPos = {
+                x: Math.ceil(dimensions.width / 2),
+                y: Math.ceil(dimensions.height / 2)
+            };
+            $scope.showCrops = true;
+            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+                $scope.$apply();
+            }
+
         }
     };
 
