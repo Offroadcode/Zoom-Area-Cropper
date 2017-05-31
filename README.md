@@ -1,4 +1,4 @@
-# Zoom-Area-Cropper &middot; ![version](https://img.shields.io/badge/version-1.0.3-green.svg) [![our umbraco](https://img.shields.io/badge/our-umbraco-orange.svg)](https://our.umbraco.org/projects/website-utilities/text-over-image-editor/)
+# Zoom-Area-Cropper &middot; ![version](https://img.shields.io/badge/version-1.0.4-green.svg) [![our umbraco](https://img.shields.io/badge/our-umbraco-orange.svg)](https://our.umbraco.org/projects/website-utilities/text-over-image-editor/)
 
 A custom property editor for Umbraco that allows the editor to select multiple cropping areas with different zooms for an image.
 
@@ -14,7 +14,7 @@ Once installed, in the editor for a page with the cropper you can select an imag
 
 [Here's a simple example of making use of Zoom Area Cropper in your view](https://gist.github.com/naepalm/ef62771d72af15b9f337307eec01b4d1).
 
-**Note:** When using super large images in the cropper, you may need to save your page after adjusting a crop's position or zoom level in order to see the changed image in the crop's preview, due to ImageProcessor taking longer to handle modifying such large images. More typical sized media are more speedy with the previews.
+**Note:** When using super large images in the cropper, you may need to wait several seconds after adjusting a crop's position or zoom level in order to see the changed image in the crop's preview, due to ImageProcessor taking longer to handle modifying such large images. More typical sized media are more speedy with the previews.
 
 ## Questions?
 

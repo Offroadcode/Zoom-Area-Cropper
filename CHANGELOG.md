@@ -1,5 +1,14 @@
 # Change Log
 
+## v1.0.4
+
+### Fixed
+
+* Added some sanity/logic checks to better sanitize numbers and results being used 
+for calculating crop position/dimensions to reduce odds of NaN or Null results.
+* Fixed calculating crops off focus handle to account for its center and not its 
+upper left corner.
+
 ## v1.0.3
 
 ### Fixed
